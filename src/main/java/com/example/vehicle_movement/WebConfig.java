@@ -13,7 +13,7 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://mahesh-gaikwad-7.github.io/vehicle-tracking-frontend/") // Your updated GitHub Pages URL
+                        .allowedOrigins("https://mahesh-gaikwad-7.github.io") // Corrected: Removed trailing slash
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("*")
                         .allowCredentials(true);
