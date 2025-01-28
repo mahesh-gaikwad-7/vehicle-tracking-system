@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Movement on Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vehicle Movement on Map</h1>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map and set the initial view to a default location (latitude, longitude)
+        var map = L.map('map').setView([17.385044, 78.486671], 13); // Change to your desired coordinates
+
+        // Set the tile layer from OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Define a custom vehicle icon using the car image in the static folder
+        var vehicleIcon = L.icon({
+            iconUrl: 'C:/Users/user/Desktop/JBK/SpringOnward/vehicle-movement/src/main/resources/static/car.png',  // Image path from the static folder
+            iconSize: [32, 32],          // Adjust the size of the icon
+            iconAnchor: [16, 16],        // Adjust the anchor point of the icon
+            popupAnchor: [0, -16]        // Adjust the popup position
+        });
+
+        // Create a marker with the custom vehicle icon and add it to the map
+        var vehicleMarker = L.marker([17.385044, 78.486671], {icon: vehicleIcon}).addTo(map);
+
+        // Dummy location data simulating the vehicle's movement (latitude, longitude)
+        const vehicleLocations = [
+            { latitude: 17.385044, longitude: 78.486671 },
+            { latitude: 17.385045, longitude: 78.486673 },
+            { latitude: 17.385047, longitude: 78.486675 },
+            { latitude: 17.385050, longitude: 78.486677 },
+            // Add more locations as needed
+        ];
+
+        let index = 0;
+
+        // Function to update vehicle location on the map
+        function updateVehicleLocation() {
+            if (index < vehicleLocations.length) {
+                var newLocation = vehicleLocations[index];
+                // Update the marker's position
+                vehicleMarker.setLatLng([newLocation.latitude, newLocation.longitude]);
+                // Optionally, center the map on the new location
+                map.setView([newLocation.latitude, newLocation.longitude], 13); 
+
+                index++; // Move to the next location
+            } else {
+                index = 0; // Loop back to the start
+            }
+        }
+
+        // Update the vehicle location every 2 seconds
+        setInterval(updateVehicleLocation, 2000);
+    </script>
+</body>
+</html>
